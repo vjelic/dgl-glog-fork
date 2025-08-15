@@ -1,0 +1,228 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Glog.AI",
+          "organization": "Glog.AI",
+          "fullName": "Glog, Making software more secure",
+          "version": "1.0.0",
+          "semanticVersion": "1.0.0",
+          "informationUri": "https://www.glog.ai",
+          "rules": [
+            {
+              "id": "glog-786e760c-4827-49ff-9fb0-24102ba1d277",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\n\"Potential Unsafe Use of Temporary File/Directory\" vulnerability in Python refers to the insecure usage of temporary files or directories. This vulnerability can lead to several security risks such as race conditions, unauthorized file access, or information disclosure. In the provided code snippet, a temporary file path is being created without any security measures, which can be exploited by an attacker to gain unauthorized access or manipulate the file.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use secure methods for creating temporary files or directories. Python's `tempfile` module provides several functions to create temporary files and directories securely. \n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet using `tempfile` module:\n\n```python\nimport tempfile\nimport os\n\n# Create a secure temporary directory\nwith tempfile.TemporaryDirectory() as temp_dir:\n    bin_path = os.path.join(temp_dir, \"reddit_{}.bin\".format(format))\n```\n\nIn this code, `tempfile.TemporaryDirectory()` is used to create a secure temporary directory. The `os.path.join()` function is then used to create the full path to the temporary file. This ensures that the temporary file is created in a secure manner.\n\n## Library Dependencies\n\nThe code example requires the following Python standard library dependencies to execute properly:\n\n- `tempfile`\n- `os`\n\n## OWASP and CWE Resources\n\n- [CWE-377: Insecure Temporary File](https://cwe.mitre.org/data/definitions/377.html)"
+              },
+              "properties": {
+                "tags": [
+                  "B108"
+                ]
+              }
+            },
+            {
+              "id": "glog-594533cb-0f7a-4a95-979f-36b80398c852",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\n\"Potential Unsafe Use of Temporary File/Directory\" vulnerability in Python refers to the insecure creation and use of temporary files or directories. This vulnerability can lead to a range of security issues such as race conditions, unauthorized file access, or information disclosure. An attacker could exploit this vulnerability by predicting the name of the temporary file or directory and either reading its contents or writing malicious data to it.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use secure methods for creating temporary files or directories. Python's `tempfile` module provides several functions for this purpose, such as `tempfile.mkstemp()`, `tempfile.mkdtemp()`, and `tempfile.NamedTemporaryFile()`. These functions create temporary files or directories in a secure manner, ensuring that they cannot be tampered with while your program is using them.\n\n## Source Code Fix Recommendation\n\nIf you are using the `os` module to create temporary files, replace it with the `tempfile` module. Here is an example of how to do this:\n\n```python\n# Vulnerable code\nimport os\ntemp_file = \"/tmp/myapp.\" + str(os.getpid())\nopen(temp_file, 'w+b')\n\n# Fixed code\nimport tempfile\ntemp_file = tempfile.NamedTemporaryFile(delete=True)\n```\n\nIn the fixed code, `tempfile.NamedTemporaryFile(delete=True)` is used to create a temporary file that is deleted as soon as it is closed. This ensures that the temporary file cannot be accessed by any other process.\n\n## Library Dependencies\n\nThe code example requires the following library dependencies:\n\n- Python's built-in `tempfile` module\n\n## References\n\n- [CWE-377: Insecure Temporary File](https://cwe.mitre.org/data/definitions/377.html)"
+              },
+              "properties": {
+                "tags": [
+                  "B108"
+                ]
+              }
+            },
+            {
+              "id": "glog-d6ce931b-3dea-4648-bcc7-a54e17dc189f",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nThe \"Potential Unsafe Use of Temporary File/Directory\" vulnerability in Python refers to the insecure creation or use of temporary files or directories. This can lead to a variety of security issues, such as race conditions, where an attacker can create a symlink to a file with the same name before the program does, leading to the program writing to an unintended location. This can result in unauthorized access, data corruption, or data exposure.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use secure methods for creating temporary files or directories. Python's `tempfile` module provides functions for creating secure temporary files and directories, which are not predictable by an attacker and can only be accessed by the current user.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code:\n\n```python\nimport os\nimport tempfile\n\n# Create a secure temporary directory\nwith tempfile.TemporaryDirectory() as temp_dir:\n    bin_path = os.path.join(temp_dir, \"friendster_{}.bin\".format(format))\n```\n\nIn this code, `tempfile.TemporaryDirectory()` is used to create a secure temporary directory. The `os.path.join()` function is then used to create the full path to the temporary file. This ensures that the temporary file is created in a secure manner that is not predictable by an attacker.\n\n## Library Dependencies\n\nThe code example requires the following Python standard library modules:\n\n- `os`\n- `tempfile`\n\n## References\n\n- [CWE-377: Insecure Temporary File](https://cwe.mitre.org/data/definitions/377.html)"
+              },
+              "properties": {
+                "tags": [
+                  "B108"
+                ]
+              }
+            },
+            {
+              "id": "glog-21c047cd-99b1-404a-a012-c87ab8440a0e",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nThe \"Potential Temp File/Directory Security Risk\" vulnerability in Python refers to the insecure usage of temporary files or directories. This can lead to various security issues such as race conditions, privilege escalation, or information disclosure. In the provided code snippet, the `os.symlink()` function is used to create a symbolic link to a temporary directory. This can be exploited by an attacker to create or overwrite files in arbitrary locations through a symlink attack.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should avoid using predictable names for temporary files or directories. Instead, use secure functions that generate random names. Also, ensure that the temporary files or directories are created with appropriate permissions to prevent unauthorized access.\n\n## Source Code Fix Recommendation\n\nYou can use the `tempfile` module in Python to securely create temporary files or directories. Here is a fixed version of the provided code snippet:\n\n```python\nimport os\nimport tempfile\n\n# Create a secure temporary directory\nwith tempfile.TemporaryDirectory() as temp_dir:\n    # Create a symbolic link to the temporary directory\n    os.symlink(temp_dir, os.path.join(os.getcwd(), \"dataset\"))\n```\n\n## Library Dependencies\n\nThe code example requires the following Python standard libraries:\n\n- `os`\n- `tempfile`\n\n## References\n\n- [OWASP - Insecure Temporary File](https://owasp.org/www-community/vulnerabilities/Insecure_Temporary_File)\n- [CWE-377: Insecure Temporary File](https://cwe.mitre.org/data/definitions/377.html)"
+              },
+              "properties": {
+                "tags": [
+                  "B108"
+                ]
+              }
+            }
+          ],
+          "language": "en-US",
+          "contents": [
+            "localizedData",
+            "nonLocalizedData"
+          ],
+          "isComprehensive": false
+        }
+      },
+      "language": "en-US",
+      "results": [
+        {
+          "ruleId": "glog-786e760c-4827-49ff-9fb0-24102ba1d277",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Potential Unsafe Use of Temporary File/Directory"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "benchmarks/benchmarks/utils.py"
+                },
+                "region": {
+                  "startLine": 102,
+                  "startColumn": 20,
+                  "endLine": 102,
+                  "endColumn": 55,
+                  "snippet": {
+                    "text": "        bin_path = \"/tmp/dataset/reddit/reddit_{}.bin\".format(format)\n"
+                  }
+                },
+                "contextRegion": {
+                  "startLine": 101,
+                  "endLine": 103,
+                  "snippet": {
+                    "text": "    elif name == \"reddit\":\n        bin_path = \"/tmp/dataset/reddit/reddit_{}.bin\".format(format)\n        if os.path.exists(bin_path):\n"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "MEDIUM",
+            "issue_confidence": "MEDIUM"
+          }
+        },
+        {
+          "ruleId": "glog-594533cb-0f7a-4a95-979f-36b80398c852",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Potential Unsafe Use of Temporary File/Directory"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "benchmarks/benchmarks/utils.py"
+                },
+                "region": {
+                  "startLine": 126,
+                  "startColumn": 9,
+                  "endLine": 127,
+                  "endColumn": 35,
+                  "snippet": {
+                    "text": "        sep=\"\\t\",\n"
+                  }
+                },
+                "contextRegion": {
+                  "startLine": 127,
+                  "endLine": 133,
+                  "snippet": {
+                    "text": "        \"https://dgl-asv-data.s3-us-west-2.amazonaws.com/dataset/livejournal/soc-LiveJournal1.txt.gz\",\n        \"/tmp/dataset/livejournal\",\n        \"soc-LiveJournal1.txt.gz\",\n    )\n    df = pandas.read_csv(\n        \"/tmp/dataset/livejournal/soc-LiveJournal1.txt.gz\",\n        sep=\"\\t\",\n"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "MEDIUM",
+            "issue_confidence": "MEDIUM"
+          }
+        },
+        {
+          "ruleId": "glog-d6ce931b-3dea-4648-bcc7-a54e17dc189f",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Potential Unsafe Use of Temporary File/Directory"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "benchmarks/benchmarks/utils.py"
+                },
+                "region": {
+                  "startLine": 93,
+                  "startColumn": 20,
+                  "endLine": 93,
+                  "endColumn": 63,
+                  "snippet": {
+                    "text": "        bin_path = \"/tmp/dataset/friendster/friendster_{}.bin\".format(format)\n"
+                  }
+                },
+                "contextRegion": {
+                  "startLine": 92,
+                  "endLine": 94,
+                  "snippet": {
+                    "text": "    elif name == \"friendster\":\n        bin_path = \"/tmp/dataset/friendster/friendster_{}.bin\".format(format)\n        if os.path.exists(bin_path):\n"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "MEDIUM",
+            "issue_confidence": "MEDIUM"
+          }
+        },
+        {
+          "ruleId": "glog-21c047cd-99b1-404a-a012-c87ab8440a0e",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Potential Temp File/Directory Security Risk"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "benchmarks/benchmarks/utils.py"
+                },
+                "region": {
+                  "startLine": 119,
+                  "startColumn": 16,
+                  "endLine": 119,
+                  "endColumn": 31,
+                  "snippet": {
+                    "text": "    os.symlink(\"/tmp/dataset/\", os.path.join(os.getcwd(), \"dataset\"))\n"
+                  }
+                },
+                "contextRegion": {
+                  "startLine": 118,
+                  "endLine": 120,
+                  "snippet": {
+                    "text": "def get_ogb_graph(name):\n    os.symlink(\"/tmp/dataset/\", os.path.join(os.getcwd(), \"dataset\"))\n    data = DglNodePropPredDataset(name=name)\n"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "MEDIUM",
+            "issue_confidence": "MEDIUM"
+          }
+        }
+      ],
+      "newlineSequences": [
+        "\r\n",
+        "\n"
+      ]
+    }
+  ]
+}
